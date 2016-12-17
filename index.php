@@ -102,6 +102,13 @@ if(!empty($_POST)) {
     $periodo = ($dias>0)?$periodo." {$dias} dia(s)":$periodo;
     echo "<h3>Período de estudo => {$dataInicio->format('d/m/Y')} - {$dataFim->format('d/m/Y')} $periodo</h3>";
     echo '<p>&nbsp;</p>';
+    
+    if($topicosSemana == 0){
+	$semanas = count($nomeSecoes);
+	$topicosSemana = (int) (count($nomeSecoes)/count($nomeSecoes));
+	$topicosSobra = 0;
+    }
+
     for($i=0; $i < $semanas; $i ++){
         $tmp = $i + 1;
         $semana = "{$tmp}º semana | " . $dataInicio->format('d/m/Y');
