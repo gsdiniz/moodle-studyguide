@@ -39,7 +39,7 @@ $PAGE->set_url(new moodle_url('/local/studyguide/index.php', array('id' => $_GET
 $PAGE->set_title('Plano de Estudo do '. $course->fullname);
 $PAGE->set_heading('Plano de Estudo do '. $course->fullname);
 $PAGE->set_pagelayout('course');
-//$PAGE->requires->css(new moodle_url($CFG->wwwroot.'/local/studyguide/template/css/bootstrap.min.css'),true);
+$PAGE->requires->css(new moodle_url($CFG->wwwroot.'/local/studyguide/template/css/style.css'),true);
 $PAGE->requires->css(new moodle_url($CFG->wwwroot.'/local/studyguide/template/css/font-awesome.min.css'),true);
 $PAGE->requires->js(new moodle_url($CFG->wwwroot. '/local/studyguide/template/js/dateMask.js'));
 $PAGE->requires->js(new moodle_url($CFG->wwwroot. '/local/studyguide/template/js/gerarPlano.js'));
@@ -51,7 +51,7 @@ $dataCursoFim   = date('d/m/Y',$course->enddate);
 
 echo $OUTPUT->header();
 
-echo html_writer::start_div('container');
+echo html_writer::start_div('container',array('id'=>'studyguide'));
 echo html_writer::start_div('row');
 
 echo html_writer::start_div('col-xs-12');
@@ -76,7 +76,7 @@ echo html_writer::alist($nomeSecoes);
 
 echo html_writer::end_div();
 
-echo html_writer::start_div('col-xs-6');
+echo html_writer::start_div('col-xs-6',array('id'=>'periodo'));
 
 echo html_writer::start_tag('h4').'Defina um perídodo para estudo'.html_writer::end_tag('h4');
 
