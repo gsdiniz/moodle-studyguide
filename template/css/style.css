@@ -1,0 +1,21 @@
+#studyguide{
+  position: relative;
+  padding: 10px 15px;
+  display:block;
+}
+#studyguide:after{
+  display:block;
+  content:" ";
+}
+#atividades,#periodo{
+  display:inline-block;
+}
+#periodo:after{
+  display:block;
+  content:" ";
+}
+.panel{border: 1px solid #000;border-radius:5px;margin-top:15px;}
+.panel .panel-heading,
+.panel .panel-body,
+{padding:5px;}
+.panel .panel-heading{border-bottom: 1px solid #000;}
