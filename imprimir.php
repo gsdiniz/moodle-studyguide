@@ -73,6 +73,12 @@ echo html_writer::end_div();
     $periodo = ($dias>0)?$periodo." {$dias} dia(s)":$periodo;
     echo "<h4>Período de estudo => {$dataInicio->format('d/m/Y')} - {$dataFim->format('d/m/Y')} $periodo</h4>";
 
+    if($topicosSemana == 0){
+		$semanas = count($nomeSecoes);
+		$topicosSemana = (int) (count($nomeSecoes)/count($nomeSecoes));
+		$topicosSobra = 0;
+    }
+
     for($i=0; $i < $semanas; $i ++){
         $tmp = $i + 1;
         $semana = "{$tmp}º semana | " . $dataInicio->format('d/m/Y');
