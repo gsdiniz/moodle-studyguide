@@ -6,6 +6,9 @@
     var periodoInicio = document.getElementById('periodo-inicio');
     var periodoFinal  = document.getElementById('periodo-final');
     var hoje = new Date();
+    var arrayLimit = periodoFinal.dataset.limit.split('/');
+    var limit = new Date(arrayLimit[2],arrayLimit[1]-1,arrayLimit[0]);
+    arrayLimit = null;
 
     gerarBtn.addEventListener('click',function(){
 
@@ -37,9 +40,14 @@
             return;
         }
 
+        if( dateFinal.getTime() > limit.getTime() ){
+            alert('Data de término deve ser menor ou igual '+limit.toLocaleString().substr(0,10)+', por favor verificar');
+            return;
+        }
+
         var f = document.createElement("form");
         f.setAttribute('method',"post");
-        f.setAttribute('action',"/local/studyguide/index.php?"+window.location.search.substr(1));
+        f.setAttribute('action',"index.php?"+window.location.search.substr(1));
 
         var i = document.createElement("input");
         i.setAttribute('type',"hidden");

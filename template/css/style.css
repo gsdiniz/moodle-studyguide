@@ -1,21 +1,67 @@
-#studyguide{
-  position: relative;
-  padding: 10px 15px;
-  display:block;
+#studyguide {
+    position: relative;
+    display: block;
 }
-#studyguide:after{
-  display:block;
-  content:" ";
+
+#studyguide:after {
+    display: block;
+    content: " ";
 }
-#atividades,#periodo{
-  display:inline-block;
+
+#atividades, #periodo {
+    display: inline-block;
 }
-#periodo:after{
-  display:block;
-  content:" ";
+
+#atividades {
+    width: 40%;
+    margin-right: 15px;
+    padding: 0 8px 0 0;
 }
-.panel{border: 1px solid #000;border-radius:5px;margin-top:15px;}
+
+#atividades ul {
+    overflow-y: auto;
+    height: 200px;
+    margin:0;
+}
+
+#atividades ul li:before{
+    content: '\2219 ';
+}
+
+#atividades ul li {
+    padding: 3px 0;
+}
+
+#periodo {
+    vertical-align: top;
+}
+
+#periodo:after {
+    display: block;
+    content: " ";
+}
+
+.container-sg {
+    width: 100%;
+    padding: 0;
+}
+
+.row-sg {
+    margin: 0;
+}
+
+.panel {
+    border: 1px solid #000;
+    border-radius: 5px;
+    margin-top: 15px;
+}
+
 .panel .panel-heading,
-.panel .panel-body,
-{padding:5px;}
-.panel .panel-heading{border-bottom: 1px solid #000;}
+.panel .panel-body {
+    padding: 5px;
+}
+
+.panel .panel-heading {
+    border-bottom: 1px solid #000;
+    padding: 0 5px;
+}

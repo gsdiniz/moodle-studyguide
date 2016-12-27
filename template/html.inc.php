@@ -1,7 +1,7 @@
 <?php
 
 $periodoDeEstudo = <<<EOD
-<div class="row">
+<div>
     <form class='form' onsubmit="return false">
     <div class="col-md-6">
         De: 
@@ -18,11 +18,11 @@ $periodoDeEstudo = <<<EOD
             <span class="input-group-addon" id="basic-addon1">
                 <i class="fa fa-calendar" aria-hidden="true"></i>
             </span>
-            <input type="text" id="periodo-final" class="form-control">
+            <input type="text" id="periodo-final" data-limit="||LIMIT||" class="form-control">
         </div>
     </div>
     </form>
-    <div class="col-md-12">
+    <div>
         <br/>
         <button id='gerar' class="text-center btn btn-block btn-primary">Gerar</button>
     </div>
@@ -53,7 +53,7 @@ function botaoImprimir($courseId,$dataInicio,$dataFim){
 	$dataInicio = urlencode($dataInicio);
 	$dataFim = urlencode($dataFim);
 	return <<<EOD
-        <a href='/local/studyguide/imprimir.php?c=$courseId&i=$dataInicio&f=$dataFim' class="text-center btn btn-info">Imprimir</a>
+        <a href='imprimir.php?c=$courseId&i=$dataInicio&f=$dataFim' target="_blank" class="text-center btn btn-info">Imprimir</a>
 EOD;
 }
 
@@ -61,6 +61,6 @@ function botaoSalvar($courseId,$dataInicio,$dataFim){
 	$dataInicio = urlencode($dataInicio);
 	$dataFim = urlencode($dataFim);
 	return <<<EOD
-        <a href='/local/studyguide/salvar.php?c=$courseId&i=$dataInicio&f=$dataFim' class="text-center btn btn-primary">Salvar</a>
+        <a href='salvar.php?c=$courseId&i=$dataInicio&f=$dataFim' target="_blank" class="text-center btn btn-primary">Salvar</a>
 EOD;
 }
