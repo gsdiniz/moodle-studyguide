@@ -63,4 +63,17 @@
         f.appendChild(e);
         f.submit();
     })
+
+    var checkboxes = document.getElementsByClassName('multiselect-checkbox');
+    for(var i=0;i<checkboxes.length;i++){
+        var $this = checkboxes[i];
+        $this.addEventListener('click',function(){
+            var $this = this;
+            if($this.checked){
+                $this.parentNode.className += "multiselect-on";
+                return;
+            }
+            $this.parentNode.className = "";
+        })
+    };
 })();

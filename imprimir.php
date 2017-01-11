@@ -11,7 +11,7 @@
 require_once("../../config.php");
 require_once($CFG->dirroot . '/course/lib.php');
 
-global $DB, $USER;
+global $DB, $USER, $CFG;
 
 $param_id = optional_param('c', 0, PARAM_INT);
 
@@ -25,18 +25,33 @@ $context = get_context_instance(CONTEXT_COURSE, $course->id);
 
 //VERIFY IF IS A ENROLLED STUDENT
 if (!is_enrolled($context, $USER)) {
-    print_error('unspecifycourseid', 'error');
+    print_error('usernotincourse', 'error');
 }
 
 //VERIFY IF COURSE REQUIRES BE A LOGGED USER
 require_login($course);
 
+//GET COURSE NAME IF USER IS IN A COURSE
+$groupName = null;
+if(!empty($USER->groupmember)){
+    foreach ($USER->groupmember as $groups){
+        $grupos = implode(',',$groups);
+
+        $groupName = $DB->get_records_sql(
+            "SELECT `name` FROM  {$CFG->prefix}groups gp 
+        INNER JOIN {$CFG->prefix}groups_members gpm ON gpm.groupid = gp.id
+        WHERE gp.courseid = ? AND gpm.userid = ? AND gpm.groupid IN (".$grupos.")",
+            array($course->id,$USER->id)
+        );
+        $groupName = 'Grupo(s): '.implode(',',array_keys($groupName));
+    }
+}
 
 //GET DATE START/END OF ENROL
 $user_enroll_data = $DB->get_record_sql(
-    'SELECT timestart,timeend FROM `mdl_user_enrolments` 
-inner join mdl_enrol on mdl_user_enrolments.enrolid = mdl_enrol.id
-where mdl_user_enrolments.userid = ? and mdl_enrol.courseid = ?',
+    'SELECT timestart,timeend FROM `'.$CFG->prefix.'user_enrolments` 
+inner join '.$CFG->prefix.'enrol on '.$CFG->prefix.'user_enrolments.enrolid = '.$CFG->prefix.'enrol.id
+where '.$CFG->prefix.'user_enrolments.userid = ? and '.$CFG->prefix.'enrol.courseid = ?',
     array($USER->id, $course->id)
 );
 
@@ -67,6 +82,12 @@ echo html_writer::start_div('col-xs-12');
 echo html_writer::start_tag('h4');
 echo $dataCursoFim != null ? "{$course->fullname} | Início : {$dataCursoInicio} Término : {$dataCursoFim}":"{$course->fullname} | Início : {$dataCursoInicio}";
 echo html_writer::end_tag('h4');
+
+if($groupName != null) {
+    echo html_writer::start_tag('h5');
+    echo $groupName;
+    echo html_writer::end_tag('h5');
+}
 
 echo html_writer::end_div();
 

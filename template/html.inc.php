@@ -2,7 +2,6 @@
 
 $periodoDeEstudo = <<<EOD
 <div>
-    <form class='form' onsubmit="return false">
     <div class="col-md-6">
         De: 
         <div class="input-group">
@@ -21,7 +20,6 @@ $periodoDeEstudo = <<<EOD
             <input type="text" id="periodo-final" data-limit="||LIMIT||" class="form-control">
         </div>
     </div>
-    </form>
     <div>
         <br/>
         <button id='gerar' class="text-center btn btn-block btn-primary">Gerar</button>

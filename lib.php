@@ -19,7 +19,7 @@ function local_studyguide_extend_navigation(global_navigation $navigation){
         /*
          * ADD LINK PARA O GUIA DE ESTUDO NO NAV BLACK DO CURSO
          */
-        $curso = $navigation->find($COURSE->id, global_navigation::TYPE_COURSE);
-        $curso->add('Plano de Estudo', $url, global_navigation::TYPE_CUSTOM, 'guia','guiaestudo');
+        $planoDeEstudo = navigation_node::create('Plano de Estudo', $url, global_navigation::TYPE_CUSTOM, 'guia','guiaestudo');
+        $navigation->find($COURSE->id, global_navigation::TYPE_COURSE)->add_node($planoDeEstudo,'participants');
     }
 }
