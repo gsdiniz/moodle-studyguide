@@ -43,7 +43,7 @@ if(!empty($USER->groupmember)){
         WHERE gp.courseid = ? AND gpm.userid = ? AND gpm.groupid IN (".$grupos.")",
             array($course->id,$USER->id)
         );
-        $groupName = 'Grupo(s): '.implode(',',array_keys($groupName));
+        $groupName = implode(',',array_keys($groupName));
     }
 }
 
@@ -70,7 +70,9 @@ if($user_enroll_data->timeend > 0){
 
 $nomeSecoes = array();
 foreach ($sections as $key => $section) {
-    $nomeSecoes[] = $section->name ?: 'Tópico ' . $section->section;
+    if(in_array($section->id,explode(',',$_GET['t']))){
+        $nomeSecoes[] = $section->name ?: 'Tópico ' . $section->section;
+    }
 }
 
 echo '<link href="template/css/bootstrap.min.css" rel="stylesheet"  type="text/css" />';
@@ -78,18 +80,6 @@ echo html_writer::start_div('container');
 echo html_writer::start_div('row');
 
 echo html_writer::start_div('col-xs-12');
-
-echo html_writer::start_tag('h4');
-echo $dataCursoFim != null ? "{$course->fullname} | Início : {$dataCursoInicio} Término : {$dataCursoFim}":"{$course->fullname} | Início : {$dataCursoInicio}";
-echo html_writer::end_tag('h4');
-
-if($groupName != null) {
-    echo html_writer::start_tag('h5');
-    echo $groupName;
-    echo html_writer::end_tag('h5');
-}
-
-echo html_writer::end_div();
 
 echo html_writer::start_div('col-xs-12');
 $dataInicio = DateTime::createFromFormat('d/m/Y', $_GET['i']);
@@ -104,9 +94,6 @@ $topicosSemana = (int)(count($nomeSecoes) / $semanas);
 $dias = (int)$diff->days % 7;
 $topicosSobra = (int)(count($nomeSecoes) % $semanas);
 
-$periodo = ($dias > 0) ? "| {$semanas} semana(s) {$dias} dia(s)" : "| {$semanas} semana(s)";
-echo "<h4>Período de estudo => {$dataInicio->format('d/m/Y')} - {$dataFim->format('d/m/Y')} $periodo</h4>";
-
 if ($topicosSemana == 0) {
     $semanas = count($nomeSecoes);
     $topicosSemana = (int)(count($nomeSecoes) / count($nomeSecoes));
@@ -118,6 +105,17 @@ if ($topicosSobra > $dias) {
     $topicosSemana++;
     $contadorBalanceado = 0;
 }
+
+echo cabecalhoImpressaoPdf(
+    $course->fullname,
+    $dataCursoInicio,
+    $dataCursoFim,
+    $groupName,
+    $dataInicio->format('d/m/Y'),
+    $dataFim->format('d/m/Y'),
+    $semanas,
+    $dias
+);
 
 for ($i = 0; $i < $semanas; $i++) {
     $tmp = $i + 1;

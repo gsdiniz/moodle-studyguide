@@ -65,7 +65,9 @@ $PAGE->set_heading('Plano de Estudo do ' . $course->fullname);
 $PAGE->set_pagelayout('course');
 $PAGE->requires->css(new moodle_url($CFG->wwwroot . '/local/studyguide/template/css/style.css'), true);
 $PAGE->requires->css(new moodle_url($CFG->wwwroot . '/local/studyguide/template/css/font-awesome.min.css'), true);
+$PAGE->requires->css(new moodle_url($CFG->wwwroot . '/local/studyguide/template/css/datepickk.min.css'), true);
 $PAGE->requires->js(new moodle_url($CFG->wwwroot . '/local/studyguide/template/js/dateMask.js'));
+$PAGE->requires->js(new moodle_url($CFG->wwwroot . '/local/studyguide/template/js/datepickk.min.js'),true);
 $PAGE->requires->js(new moodle_url($CFG->wwwroot . '/local/studyguide/template/js/gerarPlano.js'));
 
 require_once($CFG->dirroot . '/local/studyguide/template/html.inc.php');
@@ -106,12 +108,22 @@ $nomeSecoes = array();
 echo html_writer::start_div('multiselect');
 foreach ($sections as $key => $section) {
     $nomesecao = $section->name ?: 'Tópico ' . $section->section;
-    //var_dump($section);
-    echo "<div><input class='multiselect-checkbox' type=\"checkbox\" name=\"topico[]\" value=\"{$section->id}\" />{$nomesecao}</div>";
+    $checked = 'checked';
+    $class = 'multiselect-on';
+
+    if(!empty($_POST) && !in_array($section->id,array_values($_POST['topicos']))){
+        $checked = '';
+        $class = '';
+    }
+
+    echo "<div class='{$class}'><input {$checked} class='multiselect-checkbox' 
+            type=\"checkbox\" name=\"topico[]\" value=\"{$section->id}\" />{$nomesecao}</div>";
+
+    if(!empty($_POST) && in_array($section->id,array_values($_POST['topicos']))){
+        $nomeSecoes[] = $nomesecao;
+    }
 }
 echo html_writer::end_div();
-
-//echo html_writer::alist($nomeSecoes);
 
 echo html_writer::end_div();
 
@@ -216,8 +228,8 @@ if (!empty($_POST)) {
     echo html_writer::end_div();
 
     echo html_writer::start_div('col-xs-12', array('style' => 'text-align:center'))
-        . botaoImprimir($course->id, $_POST['dataInicio'], $_POST['dataFim'])
-        . botaoSalvar($course->id, $_POST['dataInicio'], $_POST['dataFim'])
+        . botaoImprimir($course->id, $_POST['dataInicio'], $_POST['dataFim'], $_POST['topicos'])
+        . botaoSalvar($course->id, $_POST['dataInicio'], $_POST['dataFim'], $_POST['topicos'])
         . html_writer::end_div();
 }
 

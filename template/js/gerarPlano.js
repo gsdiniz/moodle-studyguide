@@ -59,6 +59,19 @@
         e.setAttribute('name',"dataFim");
         e.setAttribute('value',periodoFinal.value);
 
+        var checkboxes = document.getElementsByClassName('multiselect-checkbox');
+
+        for(var tmp=0;tmp<checkboxes.length;tmp++){
+            var $this = checkboxes[tmp];
+            if($this.checked){
+                var c = document.createElement("input");
+                c.setAttribute('type',"hidden");
+                c.setAttribute('name',"topicos[]")
+                c.setAttribute('value',$this.value);
+                f.appendChild(c);
+            }
+        };
+
         f.appendChild(i);
         f.appendChild(e);
         f.submit();
@@ -77,3 +90,35 @@
         })
     };
 })();
+
+var datepicker = new Datepickk();
+function dataInicio(){
+    var ontem = new Date();
+    ontem.setDate(ontem.getDate() -1);
+    datepicker.startDate = ontem;
+    datepicker.minDate = ontem;
+    datepicker.title = 'Escolha a data de início';
+    datepicker.closeOnSelect = true;
+    datepicker.onSelect = function(){
+        document.getElementById('periodo-inicio').value = this.toLocaleDateString()
+        datepicker.unselectAll();
+    };
+    datepicker.show();
+}
+
+function dataFim(){
+    if(document.getElementById('periodo-inicio').value != ''){
+        var dataMinima = document.getElementById('periodo-inicio').value.split('/');
+        datepicker.startDate = new Date(dataMinima[2],dataMinima[1]-1,dataMinima[0]);
+        datepicker.minDate = new Date(dataMinima[2],dataMinima[1]-1,dataMinima[0]);
+        datepicker.title = 'Escolha a data de término';
+        datepicker.closeOnSelect = true;
+        datepicker.onSelect = function(){
+            document.getElementById('periodo-final').value = this.toLocaleDateString()
+            datepicker.unselectAll();
+        };
+        datepicker.show();
+    }else{
+        alert('Informe uma data de início primeiro')
+    }
+}
