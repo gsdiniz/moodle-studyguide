@@ -129,7 +129,7 @@ echo html_writer::end_div();
 
 echo html_writer::start_div('col-xs-6', array('id' => 'periodo'));
 
-echo html_writer::start_tag('h4') . 'Defina um perídodo para estudo' . html_writer::end_tag('h4');
+echo html_writer::start_tag('h4') . 'Defina um período para estudo' . html_writer::end_tag('h4');
 
 echo str_replace('||LIMIT||', $dataCursoFim, $periodoDeEstudo);
 
