@@ -74,6 +74,7 @@
 
         f.appendChild(i);
         f.appendChild(e);
+        document.body.appendChild(f);
         f.submit();
     })
 
