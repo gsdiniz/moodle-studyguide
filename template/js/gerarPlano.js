@@ -28,8 +28,8 @@
         }
 
         if(
-            parseInt(hoje.getFullYear()+''+hoje.getMonth()+''+hoje.getDate()) >
-            parseInt(dateInicio.getFullYear()+''+dateInicio.getMonth()+''+dateInicio.getDate())
+            parseInt(hoje.getFullYear().toString()+hoje.getMonth().toString()+hoje.getDate().toString().padStart(2,"0")) >
+            parseInt(dateInicio.getFullYear().toString()+dateInicio.getMonth().toString()+dateInicio.getDate().toString().padStart(2,"0"))
         ){
             alert('Data de início deve ser maior ou igual '+hoje.toLocaleString().substr(0,10)+', por favor verificar');
             return;
